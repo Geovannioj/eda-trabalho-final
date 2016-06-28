@@ -36,15 +36,19 @@ int subItemMenuPrincipal(){
     return opcao;
 }
 FILE *lerArquivo(){
-    FILE *entrada = NULL;
+    FILE *entrada;
     char nomeArquivo[150];
     do{
         printf("Digite o arquivo:");
         scanf("%s",nomeArquivo);
         entrada = fopen(nomeArquivo,"r");
+        entrada = fopen("CFO_UF_municipios_brasil.csv","r");
+
         if(entrada == NULL){
+
             printf("Arquivo com problema, tente novamente!\n");
         }else{
+
             return entrada;
         }
     }while(entrada == NULL);
@@ -60,9 +64,9 @@ int main()
 
     arquivo = lerArquivo();
 
-    while(!feof(arquivo)){
+    //while(!feof(arquivo)){
 
-    }
+    //}
 
     do{
         opcaoMenuPrincipal = 0;
