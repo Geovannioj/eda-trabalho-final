@@ -35,6 +35,8 @@ void menuPrincipal(){
     printf("5 - Sair do Sistema\n");
 }
 
+
+
 void access_archive(int long line){
 
     FILE *entrada,*saida;
@@ -45,7 +47,7 @@ void access_archive(int long line){
     fflush(stdin);
 
     entrada = fopen("CFO_UF_municipios_brasil.csv","r");
-    saida = fopen("saida.txt","a");
+    //saida = fopen("relatorio_municipios.txt","a");
     if(entrada == NULL){
         printf("Problema ao abrir o arquivo, verifique!\n");
         return;
@@ -213,7 +215,208 @@ void access_archive(int long line){
             printf("Quantide de Auxiliares de Próteses Dentárias %s\n",APD);
             printf("Quantide de Empresa De Produtos Odontologicos %s\n",EPO);
             printf("Total %s\n",TOTAL);
+/*
+            fprintf(saida,"UF: %s\n",UF);
+            fprintf(saida,"Municipio: %s\n",municipio);
+            fprintf(saida,"Quantide de cirurgiões dentistas: %s\n",CD);
+            fprintf(saida,"Entidade Prestadora De Assistencia Odontologica: %s\n", EPAO);
+            fprintf(saida,"Quantide de Técnicos em Prótese Dentária %s\n",TPD);
+            fprintf(saida,"Quantide De Laboratorio De Protese Dentaria %s\n", LB);
+            fprintf(saida,"Quantide de Técnicos em Saúde Bucal %s\n",TSB);
+            fprintf(saida,"Quantide de Auxiliares em Saúde Bucal %s\n",ASB);
+            fprintf(saida,"Quantide de Auxiliares de Próteses Dentárias %s\n",APD);
+            fprintf(saida,"Quantide de Empresa De Produtos Odontologicos %s\n",EPO);
+            fprintf(saida,"Total %s\n",TOTAL);
+*/
+            fflush(stdin);
 
+            fclose(entrada);
+           // fclose(saida);
+    }
+
+
+        }
+    }
+
+void access_archive_search_state(int long line){
+
+    FILE *entrada,*saida;
+    char  UF[3],municipio[50], linha_lida[100], CD[7], EPAO[7], TPD[7], LB[7], TSB[7], ASB[7], APD[7], EPO[7], TOTAL[7];
+    int i = 0, j = 0,verifica = 0;
+    long int current_line = 0;
+
+    fflush(stdin);
+
+    entrada = fopen("CFO_UF_municipios_brasil.csv","r");
+    saida = fopen("relatorio_estado.txt","a");
+    if(entrada == NULL){
+        printf("Problema ao abrir o arquivo, verifique!\n");
+        return;
+    }
+    //fprintf(saida,"UF\tMunicipio\tCD\tEPAO\tTPD\tLB\tTSB\tASB\tAPD\tEPO\tTOTAL\n");
+
+
+    while(!feof(entrada)){
+        current_line++;
+        fgets(linha_lida,100,entrada);
+
+        if(current_line == line){
+            //Pega_estado
+            UF[0] = linha_lida[0];
+            UF[1] = linha_lida[1];
+            UF[2] = '\0';
+
+            //pega cidade
+            i=3;
+            j=0;
+            while(verifica == 0){
+
+                municipio[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            municipio[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+            //pega CD - Quantide de cirurgiões dentistas
+            while(verifica == 0){
+                CD[j++] =linha_lida[i++];
+
+                if(linha_lida[i]==';'){
+                    verifica = 1;
+                }
+            }
+            CD[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega EPAO - Entidade Prestadora De Assistencia Odontologica
+            while(verifica == 0){
+                EPAO[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            EPAO[j] = '\0';
+
+            //pega TPD - Quantide de Técnicos em Prótese Dentária
+
+            verifica = j = 0;
+            i++;
+
+            while(verifica == 0){
+                TPD[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            TPD[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega LB - Quantide De Laboratorio De Protese Dentaria
+            while(verifica == 0){
+                LB[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            LB[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega TSB - Quantide de Técnicos em Saúde Bucal
+            while(verifica == 0){
+                TSB[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            TSB[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega ASB - Quantide de Auxiliares em Saúde Bucal
+            while(verifica == 0){
+                ASB[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            ASB[j] = '\0';
+            verifica = j = 0;
+            i++;
+
+            //pega APD - Quantide de Auxiliares de Próteses Dentárias
+            while(verifica == 0){
+                APD[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            APD[j] = '\0';
+            verifica = j = 0;
+            i++;
+
+            int continua_leitura = 0;
+            //pega EPOs - Quantide de Empresa De Produtos Odontologicos
+            while(verifica == 0){
+                EPO[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'|| linha_lida[i] == '\n'){
+                    verifica = 1;
+                    if(linha_lida[i] == '\n'){
+                        continua_leitura = 1;
+                    }
+
+                }
+            }
+            EPO[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega total
+            if(continua_leitura == 0){
+                while(verifica == 0){
+                TOTAL[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == '\n'||linha_lida[i] ==';'){
+                    verifica =1;
+                }
+            }
+            TOTAL[j] = '\0';
+
+            }
+
+
+            // imprime linha
+/*
+            printf("UF: %s\n",UF);
+            printf("Municipio: %s\n",municipio);
+            printf("Quantide de cirurgiões dentistas: %s\n",CD);
+            printf("Entidade Prestadora De Assistencia Odontologica: %s\n", EPAO);
+            printf("Quantide de Técnicos em Prótese Dentária %s\n",TPD);
+            printf("Quantide De Laboratorio De Protese Dentaria %s\n", LB);
+            printf("Quantide de Técnicos em Saúde Bucal %s\n",TSB);
+            printf("Quantide de Auxiliares em Saúde Bucal %s\n",ASB);
+            printf("Quantide de Auxiliares de Próteses Dentárias %s\n",APD);
+            printf("Quantide de Empresa De Produtos Odontologicos %s\n",EPO);
+            printf("Total %s\n",TOTAL);
+*/
             fprintf(saida,"UF: %s\n",UF);
             fprintf(saida,"Municipio: %s\n",municipio);
             fprintf(saida,"Quantide de cirurgiões dentistas: %s\n",CD);
@@ -236,14 +439,637 @@ void access_archive(int long line){
         }
     }
 
-void access_ordenated_tree(tree *raiz){
-    if(raiz->esquerda){
-        access_ordenated_tree(raiz->esquerda);
+
+void access_archive_city(int long line){
+
+    FILE *entrada,*saida;
+    char  UF[3],municipio[50], linha_lida[100], CD[7], EPAO[7], TPD[7], LB[7], TSB[7], ASB[7], APD[7], EPO[7], TOTAL[7];
+    int i = 0, j = 0,verifica = 0;
+    long int current_line = 0;
+
+    fflush(stdin);
+
+    entrada = fopen("CFO_UF_municipios_brasil.csv","r");
+    saida = fopen("relatorio_municipios.txt","a");
+    if(entrada == NULL){
+        printf("Problema ao abrir o arquivo, verifique!\n");
+        return;
     }
-    access_archive(raiz->node->linha);
+    //fprintf(saida,"UF\tMunicipio\tCD\tEPAO\tTPD\tLB\tTSB\tASB\tAPD\tEPO\tTOTAL\n");
+
+
+    while(!feof(entrada)){
+        current_line++;
+        fgets(linha_lida,100,entrada);
+
+        if(current_line == line){
+            //Pega_estado
+            UF[0] = linha_lida[0];
+            UF[1] = linha_lida[1];
+            UF[2] = '\0';
+
+            //pega cidade
+            i=3;
+            j=0;
+            while(verifica == 0){
+
+                municipio[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            municipio[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+            //pega CD - Quantide de cirurgiões dentistas
+            while(verifica == 0){
+                CD[j++] =linha_lida[i++];
+
+                if(linha_lida[i]==';'){
+                    verifica = 1;
+                }
+            }
+            CD[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega EPAO - Entidade Prestadora De Assistencia Odontologica
+            while(verifica == 0){
+                EPAO[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            EPAO[j] = '\0';
+
+            //pega TPD - Quantide de Técnicos em Prótese Dentária
+
+            verifica = j = 0;
+            i++;
+
+            while(verifica == 0){
+                TPD[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            TPD[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega LB - Quantide De Laboratorio De Protese Dentaria
+            while(verifica == 0){
+                LB[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            LB[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega TSB - Quantide de Técnicos em Saúde Bucal
+            while(verifica == 0){
+                TSB[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            TSB[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega ASB - Quantide de Auxiliares em Saúde Bucal
+            while(verifica == 0){
+                ASB[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            ASB[j] = '\0';
+            verifica = j = 0;
+            i++;
+
+            //pega APD - Quantide de Auxiliares de Próteses Dentárias
+            while(verifica == 0){
+                APD[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            APD[j] = '\0';
+            verifica = j = 0;
+            i++;
+
+            int continua_leitura = 0;
+            //pega EPOs - Quantide de Empresa De Produtos Odontologicos
+            while(verifica == 0){
+                EPO[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'|| linha_lida[i] == '\n'){
+                    verifica = 1;
+                    if(linha_lida[i] == '\n'){
+                        continua_leitura = 1;
+                    }
+
+                }
+            }
+            EPO[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega total
+            if(continua_leitura == 0){
+                while(verifica == 0){
+                TOTAL[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == '\n'||linha_lida[i] ==';'){
+                    verifica =1;
+                }
+            }
+            TOTAL[j] = '\0';
+
+            }
+
+
+            // imprime linha
+/*
+            printf("UF: %s\n",UF);
+            printf("Municipio: %s\n",municipio);
+            printf("Quantide de cirurgiões dentistas: %s\n",CD);
+            printf("Entidade Prestadora De Assistencia Odontologica: %s\n", EPAO);
+            printf("Quantide de Técnicos em Prótese Dentária %s\n",TPD);
+            printf("Quantide De Laboratorio De Protese Dentaria %s\n", LB);
+            printf("Quantide de Técnicos em Saúde Bucal %s\n",TSB);
+            printf("Quantide de Auxiliares em Saúde Bucal %s\n",ASB);
+            printf("Quantide de Auxiliares de Próteses Dentárias %s\n",APD);
+            printf("Quantide de Empresa De Produtos Odontologicos %s\n",EPO);
+            printf("Total %s\n",TOTAL);
+*/
+            fprintf(saida,"UF: %s\n",UF);
+            fprintf(saida,"Municipio: %s\n",municipio);
+            fprintf(saida,"Quantide de cirurgiões dentistas: %s\n",CD);
+            fprintf(saida,"Entidade Prestadora De Assistencia Odontologica: %s\n", EPAO);
+            fprintf(saida,"Quantide de Técnicos em Prótese Dentária %s\n",TPD);
+            fprintf(saida,"Quantide De Laboratorio De Protese Dentaria %s\n", LB);
+            fprintf(saida,"Quantide de Técnicos em Saúde Bucal %s\n",TSB);
+            fprintf(saida,"Quantide de Auxiliares em Saúde Bucal %s\n",ASB);
+            fprintf(saida,"Quantide de Auxiliares de Próteses Dentárias %s\n",APD);
+            fprintf(saida,"Quantide de Empresa De Produtos Odontologicos %s\n",EPO);
+            fprintf(saida,"Total %s\n",TOTAL);
+
+            fflush(stdin);
+
+            fclose(entrada);
+            fclose(saida);
+    }
+
+
+        }
+    }
+void access_ordenated_tree_city(tree *raiz){
+    if(raiz->esquerda){
+        access_ordenated_tree_city(raiz->esquerda);
+    }
+    access_archive_city(raiz->node->linha);
 
     if(raiz->direita){
-        access_ordenated_tree(raiz->direita);
+        access_ordenated_tree_city(raiz->direita);
+    }
+}
+
+void access_archive_cd(int long line){
+
+    FILE *entrada,*saida;
+    char  UF[3],municipio[50], linha_lida[100], CD[7], EPAO[7], TPD[7], LB[7], TSB[7], ASB[7], APD[7], EPO[7], TOTAL[7];
+    int i = 0, j = 0,verifica = 0;
+    long int current_line = 0;
+
+    fflush(stdin);
+
+    entrada = fopen("CFO_UF_municipios_brasil.csv","r");
+    saida = fopen("relatorio_cd.txt","a");
+    if(entrada == NULL){
+        printf("Problema ao abrir o arquivo, verifique!\n");
+        return;
+    }
+    //fprintf(saida,"UF\tMunicipio\tCD\tEPAO\tTPD\tLB\tTSB\tASB\tAPD\tEPO\tTOTAL\n");
+
+
+    while(!feof(entrada)){
+        current_line++;
+        fgets(linha_lida,100,entrada);
+
+        if(current_line == line){
+            //Pega_estado
+            UF[0] = linha_lida[0];
+            UF[1] = linha_lida[1];
+            UF[2] = '\0';
+
+            //pega cidade
+            i=3;
+            j=0;
+            while(verifica == 0){
+
+                municipio[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            municipio[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+            //pega CD - Quantide de cirurgiões dentistas
+            while(verifica == 0){
+                CD[j++] =linha_lida[i++];
+
+                if(linha_lida[i]==';'){
+                    verifica = 1;
+                }
+            }
+            CD[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega EPAO - Entidade Prestadora De Assistencia Odontologica
+            while(verifica == 0){
+                EPAO[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            EPAO[j] = '\0';
+
+            //pega TPD - Quantide de Técnicos em Prótese Dentária
+
+            verifica = j = 0;
+            i++;
+
+            while(verifica == 0){
+                TPD[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            TPD[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega LB - Quantide De Laboratorio De Protese Dentaria
+            while(verifica == 0){
+                LB[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            LB[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega TSB - Quantide de Técnicos em Saúde Bucal
+            while(verifica == 0){
+                TSB[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            TSB[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega ASB - Quantide de Auxiliares em Saúde Bucal
+            while(verifica == 0){
+                ASB[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            ASB[j] = '\0';
+            verifica = j = 0;
+            i++;
+
+            //pega APD - Quantide de Auxiliares de Próteses Dentárias
+            while(verifica == 0){
+                APD[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            APD[j] = '\0';
+            verifica = j = 0;
+            i++;
+
+            int continua_leitura = 0;
+            //pega EPOs - Quantide de Empresa De Produtos Odontologicos
+            while(verifica == 0){
+                EPO[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'|| linha_lida[i] == '\n'){
+                    verifica = 1;
+                    if(linha_lida[i] == '\n'){
+                        continua_leitura = 1;
+                    }
+
+                }
+            }
+            EPO[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega total
+            if(continua_leitura == 0){
+                while(verifica == 0){
+                TOTAL[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == '\n'||linha_lida[i] ==';'){
+                    verifica =1;
+                }
+            }
+            TOTAL[j] = '\0';
+
+            }
+
+
+            // imprime linha
+/*
+            printf("UF: %s\n",UF);
+            printf("Municipio: %s\n",municipio);
+            printf("Quantide de cirurgiões dentistas: %s\n",CD);
+            printf("Entidade Prestadora De Assistencia Odontologica: %s\n", EPAO);
+            printf("Quantide de Técnicos em Prótese Dentária %s\n",TPD);
+            printf("Quantide De Laboratorio De Protese Dentaria %s\n", LB);
+            printf("Quantide de Técnicos em Saúde Bucal %s\n",TSB);
+            printf("Quantide de Auxiliares em Saúde Bucal %s\n",ASB);
+            printf("Quantide de Auxiliares de Próteses Dentárias %s\n",APD);
+            printf("Quantide de Empresa De Produtos Odontologicos %s\n",EPO);
+            printf("Total %s\n",TOTAL);
+*/
+            fprintf(saida,"UF: %s\n",UF);
+            fprintf(saida,"Municipio: %s\n",municipio);
+            fprintf(saida,"Quantide de cirurgiões dentistas: %s\n",CD);
+            fprintf(saida,"Entidade Prestadora De Assistencia Odontologica: %s\n", EPAO);
+            fprintf(saida,"Quantide de Técnicos em Prótese Dentária %s\n",TPD);
+            fprintf(saida,"Quantide De Laboratorio De Protese Dentaria %s\n", LB);
+            fprintf(saida,"Quantide de Técnicos em Saúde Bucal %s\n",TSB);
+            fprintf(saida,"Quantide de Auxiliares em Saúde Bucal %s\n",ASB);
+            fprintf(saida,"Quantide de Auxiliares de Próteses Dentárias %s\n",APD);
+            fprintf(saida,"Quantide de Empresa De Produtos Odontologicos %s\n",EPO);
+            fprintf(saida,"Total %s\n",TOTAL);
+
+            fflush(stdin);
+
+            fclose(entrada);
+            fclose(saida);
+    }
+
+
+        }
+    }
+void access_ordenated_tree_cd(tree *raiz){
+    if(raiz->esquerda){
+        access_ordenated_tree_cd(raiz->esquerda);
+    }
+    access_archive_cd(raiz->node->linha);
+
+    if(raiz->direita){
+        access_ordenated_tree_cd(raiz->direita);
+    }
+}
+
+void access_archive_total(int long line){
+
+    FILE *entrada,*saida;
+    char  UF[3],municipio[50], linha_lida[100], CD[7], EPAO[7], TPD[7], LB[7], TSB[7], ASB[7], APD[7], EPO[7], TOTAL[7];
+    int i = 0, j = 0,verifica = 0;
+    long int current_line = 0;
+
+    fflush(stdin);
+
+    entrada = fopen("CFO_UF_municipios_brasil.csv","r");
+    saida = fopen("relatorio_total.txt","a");
+    if(entrada == NULL){
+        printf("Problema ao abrir o arquivo, verifique!\n");
+        return;
+    }
+    //fprintf(saida,"UF\tMunicipio\tCD\tEPAO\tTPD\tLB\tTSB\tASB\tAPD\tEPO\tTOTAL\n");
+
+
+    while(!feof(entrada)){
+        current_line++;
+        fgets(linha_lida,100,entrada);
+
+        if(current_line == line){
+            //Pega_estado
+            UF[0] = linha_lida[0];
+            UF[1] = linha_lida[1];
+            UF[2] = '\0';
+
+            //pega cidade
+            i=3;
+            j=0;
+            while(verifica == 0){
+
+                municipio[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            municipio[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+            //pega CD - Quantide de cirurgiões dentistas
+            while(verifica == 0){
+                CD[j++] =linha_lida[i++];
+
+                if(linha_lida[i]==';'){
+                    verifica = 1;
+                }
+            }
+            CD[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega EPAO - Entidade Prestadora De Assistencia Odontologica
+            while(verifica == 0){
+                EPAO[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            EPAO[j] = '\0';
+
+            //pega TPD - Quantide de Técnicos em Prótese Dentária
+
+            verifica = j = 0;
+            i++;
+
+            while(verifica == 0){
+                TPD[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            TPD[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega LB - Quantide De Laboratorio De Protese Dentaria
+            while(verifica == 0){
+                LB[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            LB[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega TSB - Quantide de Técnicos em Saúde Bucal
+            while(verifica == 0){
+                TSB[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            TSB[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega ASB - Quantide de Auxiliares em Saúde Bucal
+            while(verifica == 0){
+                ASB[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            ASB[j] = '\0';
+            verifica = j = 0;
+            i++;
+
+            //pega APD - Quantide de Auxiliares de Próteses Dentárias
+            while(verifica == 0){
+                APD[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'){
+                    verifica = 1;
+                }
+            }
+            APD[j] = '\0';
+            verifica = j = 0;
+            i++;
+
+            int continua_leitura = 0;
+            //pega EPOs - Quantide de Empresa De Produtos Odontologicos
+            while(verifica == 0){
+                EPO[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == ';'|| linha_lida[i] == '\n'){
+                    verifica = 1;
+                    if(linha_lida[i] == '\n'){
+                        continua_leitura = 1;
+                    }
+
+                }
+            }
+            EPO[j] = '\0';
+
+            verifica = j = 0;
+            i++;
+
+            //pega total
+            if(continua_leitura == 0){
+                while(verifica == 0){
+                TOTAL[j++] = linha_lida[i++];
+
+                if(linha_lida[i] == '\n'||linha_lida[i] ==';'){
+                    verifica =1;
+                }
+            }
+            TOTAL[j] = '\0';
+
+            }
+
+
+            // imprime linha
+/*
+            printf("UF: %s\n",UF);
+            printf("Municipio: %s\n",municipio);
+            printf("Quantide de cirurgiões dentistas: %s\n",CD);
+            printf("Entidade Prestadora De Assistencia Odontologica: %s\n", EPAO);
+            printf("Quantide de Técnicos em Prótese Dentária %s\n",TPD);
+            printf("Quantide De Laboratorio De Protese Dentaria %s\n", LB);
+            printf("Quantide de Técnicos em Saúde Bucal %s\n",TSB);
+            printf("Quantide de Auxiliares em Saúde Bucal %s\n",ASB);
+            printf("Quantide de Auxiliares de Próteses Dentárias %s\n",APD);
+            printf("Quantide de Empresa De Produtos Odontologicos %s\n",EPO);
+            printf("Total %s\n",TOTAL);
+*/
+            fprintf(saida,"UF: %s\n",UF);
+            fprintf(saida,"Municipio: %s\n",municipio);
+            fprintf(saida,"Quantide de cirurgiões dentistas: %s\n",CD);
+            fprintf(saida,"Entidade Prestadora De Assistencia Odontologica: %s\n", EPAO);
+            fprintf(saida,"Quantide de Técnicos em Prótese Dentária %s\n",TPD);
+            fprintf(saida,"Quantide De Laboratorio De Protese Dentaria %s\n", LB);
+            fprintf(saida,"Quantide de Técnicos em Saúde Bucal %s\n",TSB);
+            fprintf(saida,"Quantide de Auxiliares em Saúde Bucal %s\n",ASB);
+            fprintf(saida,"Quantide de Auxiliares de Próteses Dentárias %s\n",APD);
+            fprintf(saida,"Quantide de Empresa De Produtos Odontologicos %s\n",EPO);
+            fprintf(saida,"Total %s\n",TOTAL);
+
+            fflush(stdin);
+
+            fclose(entrada);
+            fclose(saida);
+    }
+
+
+        }
+    }
+void access_ordenated_tree_total(tree *raiz){
+    if(raiz->esquerda){
+        access_ordenated_tree_total(raiz->esquerda);
+    }
+    access_archive_total(raiz->node->linha);
+
+    if(raiz->direita){
+        access_ordenated_tree_total(raiz->direita);
     }
 }
 
@@ -276,27 +1102,11 @@ void search_city(tree *raiz, char *municipio) {
 		search_city(raiz->direita, municipio);
     }
 }
-void navega_arvore_estados(tree *raiz, char *uf) {
-
-    if(strcmp(raiz->node->uf, uf) == 0)
-	{
-        access_archive(raiz->node->linha);
-	}
-
-    if(raiz->esquerda)
-    {
-		navega_arvore_estados(raiz->esquerda, uf);
-    }
-
-	if(raiz->direita){
-		navega_arvore_estados(raiz->direita, uf);
-    }
-}
 
 void search_state(tree *raiz, char *UF){
 
     if(strcmp(raiz->node->uf,UF) == 0){
-        access_archive(raiz->node->linha);
+        access_archive_search_state(raiz->node->linha);
 
     }
     if(raiz->esquerda){
@@ -571,11 +1381,14 @@ int main()
             case 2: opcaoSubMenu = subItemMenuPrincipal();
                     switch(opcaoSubMenu){
                         case 1:
-                                access_ordenated_tree(raiz_trees->raiz_municipio);
+                                access_ordenated_tree_city(raiz_trees->raiz_municipio);
+                                printf("relatorio gerado no arquivo: relatorio_municipios.txt\n");
                                 break;
-                        case 2: access_ordenated_tree(raiz_trees->raiz_cd);
+                        case 2: access_ordenated_tree_cd(raiz_trees->raiz_cd);
+                                printf("relatorio gerado no arquivo: relatorio_cd.txt\n");
                                 break;
-                        case 3: access_ordenated_tree(raiz_trees->raiz_total);
+                        case 3: access_ordenated_tree_total(raiz_trees->raiz_total);
+                                printf("relatorio gerado no arquivo: relatorio_total.txt\n");
                                 break;
                         default:printf("Opcao invalida, escolha uma das opcoes do menu\n");
                     }
@@ -584,6 +1397,7 @@ int main()
             case 3: printf("Digite as duas siglas do estado - Ex: \"DF\" : ");
                     scanf("%s",UF);
                     search_state(raiz_trees->raiz_total,UF);
+                    printf("Relatorio do estado %s esta no arquivo relatorio_estado.txt\n");
                     break;
             case 4: printf("Digite o municipio em maiusculo para ser procurado:");
                     scanf("%s",cidade);
